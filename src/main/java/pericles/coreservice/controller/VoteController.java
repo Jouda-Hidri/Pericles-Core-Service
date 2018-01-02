@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VoteController {
 	
 	   @RequestMapping(value = "/vote/{candidate}", method = RequestMethod.GET)
-	    public String vote(@PathVariable String candidate) {
+	    public String vote(@PathVariable("candidate") String candidate) {
 	        System.out.println("Vote for " + candidate);
 	        return "You voted for "+candidate;
 	   }
