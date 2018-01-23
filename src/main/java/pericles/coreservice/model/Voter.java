@@ -1,28 +1,25 @@
 package pericles.coreservice.model;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Candidate {
+public class Voter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "candidate_id")
+	@Column(name = "voter_id")
 	private long id;
 
 	private String firstName;
 	private String lastName;
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	private Collection<Voter> voters = new LinkedHashSet<Voter>();
+	@ManyToOne
+	@JoinColumn(name = "candidate_id")
+	private Candidate candidate;
 
 	public String getFirstName() {
 		return firstName;
@@ -40,12 +37,13 @@ public class Candidate {
 		this.lastName = lastName;
 	}
 
-	public Collection<Voter> getVoters() {
-		return voters;
+	public Candidate getCandidate() {
+		return candidate;
 	}
 
-	public void setVoters(Set<Voter> voters) {
-		this.voters = voters;
+	public void setCandidate(Candidate candidate) {
+		this.candidate = candidate;
 	}
+	
 
 }
