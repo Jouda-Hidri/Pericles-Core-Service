@@ -23,6 +23,19 @@ public class Candidate {
 	private String lastName;
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
 	private Collection<Voter> voters = new LinkedHashSet<Voter>();
+	
+	public Candidate() {
+		
+	}
+	
+	public Candidate(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
+	public long getId() {
+		return id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -46,6 +59,22 @@ public class Candidate {
 
 	public void setVoters(Set<Voter> voters) {
 		this.voters = voters;
+	}
+	
+	public void addVoter(Voter voter) {
+		if(voters == null) {
+			voters = new LinkedHashSet<Voter>();
+		}
+        this.voters.add(voter);
+        if (voter.getCandidate() != this) {
+        	voter.setCandidate(this);
+        }
+	}
+	
+	@Override
+	public
+	String toString() {
+		return firstName +" "+lastName;
 	}
 
 }

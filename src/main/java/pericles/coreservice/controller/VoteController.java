@@ -1,5 +1,8 @@
 package pericles.coreservice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +23,12 @@ public class VoteController {
 	CandidateRepository candidateRepository;
 
 	@RequestMapping(value = "/vote/{voter}/for/{candidate}", method = RequestMethod.GET)
-	public String vote(@PathVariable("voter") long voterId, @PathVariable("candidate") long candidateId) {
-		
+	public void vote(@PathVariable("voter") long voterId, @PathVariable("candidate") long candidateId) {
+
 		Voter voter = voterRepository.findById(voterId);
 		Candidate candidate = candidateRepository.findById(candidateId);
 		voter.setCandidate(candidate);
 		voterRepository.save(voter);
-		
-		return voter.getFirstName() + " " + voter.getLastName() + " voted for " + candidate.getFirstName() + " "
-				+ candidate.getLastName();
+		System.out.println(voter.getFirstName()+" voted for "+candidate+" and voters:"+candidate.getVoters().size());
 	}
 }

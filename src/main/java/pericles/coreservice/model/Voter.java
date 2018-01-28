@@ -20,6 +20,16 @@ public class Voter {
 	@ManyToOne
 	@JoinColumn(name = "candidate_id")
 	private Candidate candidate;
+	
+	public Voter(){
+		
+	}
+
+	public Voter(String firstName, String lastName){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -43,7 +53,12 @@ public class Voter {
 
 	public void setCandidate(Candidate candidate) {
 		this.candidate = candidate;
+		if (!candidate.getVoters().contains(this)) { 
+			candidate.getVoters().add(this);
+		}
 	}
+	
+	
 	
 
 }
