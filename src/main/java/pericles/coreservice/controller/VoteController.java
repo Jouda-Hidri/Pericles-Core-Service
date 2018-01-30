@@ -31,4 +31,14 @@ public class VoteController {
 		voterRepository.save(voter);
 		System.out.println(voter.getFirstName()+" voted for "+candidate+" and voters:"+candidate.getVoters().size());
 	}
+	
+	@RequestMapping(value = "/result", method = RequestMethod.GET)
+	public List<String> getResult() {
+		List<String> listResults = new ArrayList<String>();
+		List<Candidate> candidates = candidateRepository.findAllByOrderByIdAsc();
+		for(Candidate candidate : candidates) {
+			listResults.add(candidate+" : "+candidate.getVoters().size());
+		}
+		return listResults;
+	}
 }
