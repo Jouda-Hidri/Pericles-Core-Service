@@ -1,44 +1,33 @@
 package pericles.coreservice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pericles.coreservice.model.Candidate;
-import pericles.coreservice.model.CandidateRepository;
-import pericles.coreservice.model.Voter;
-import pericles.coreservice.model.VoterRepository;
+import pericles.coreservice.service.VoteService;
 
 @RestController
 public class VoteController {
-	@Autowired
-	VoterRepository voterRepository;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	CandidateRepository candidateRepository;
+	VoteService voteService;
 
 	@RequestMapping(value = "/vote/{voter}/for/{candidate}", method = RequestMethod.GET)
 	public void vote(@PathVariable("voter") long voterId, @PathVariable("candidate") long candidateId) {
-
-		Voter voter = voterRepository.findById(voterId);
-		Candidate candidate = candidateRepository.findById(candidateId);
-		voter.setCandidate(candidate);
-		voterRepository.save(voter);
-		System.out.println(voter.getFirstName()+" voted for "+candidate+" and voters:"+candidate.getVoters().size());
+		voteService.vote(voterId, candidateId);
+		log.info("Vote successful");
 	}
-	
+
 	@RequestMapping(value = "/result", method = RequestMethod.GET)
 	public List<String> getResult() {
-		List<String> listResults = new ArrayList<String>();
-		List<Candidate> candidates = candidateRepository.findAllByOrderByIdAsc();
-		for(Candidate candidate : candidates) {
-			listResults.add(candidate+" : "+candidate.getVoters().size());
-		}
-		return listResults;
+		return voteService.getListResults();
 	}
 }
