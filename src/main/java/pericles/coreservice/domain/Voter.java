@@ -1,4 +1,4 @@
-package pericles.coreservice.model;
+package pericles.coreservice.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

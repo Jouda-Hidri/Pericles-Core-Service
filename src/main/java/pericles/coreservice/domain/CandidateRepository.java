@@ -1,4 +1,4 @@
-package pericles.coreservice.model;
+package pericles.coreservice.domain;
 
 import java.util.List;
 
