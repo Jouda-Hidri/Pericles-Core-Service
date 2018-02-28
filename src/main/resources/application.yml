@@ -16,6 +16,17 @@ eureka:         #tells about the Eureka server details and its refresh time
 spring:    
   application:
     name: core-service   #current service name to be used by the eureka server
+  rabbitmq: 
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings: 
+        input:
+          destination: userSubscriptions
+          group: userSubscriptionsIntakeGroup
      
 management:
   security:
