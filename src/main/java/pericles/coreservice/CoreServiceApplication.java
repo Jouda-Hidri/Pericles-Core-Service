@@ -1,6 +1,8 @@
 package pericles.coreservice;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +22,8 @@ import pericles.coreservice.domain.VoterRepository;
 @EnableEurekaClient
 @SpringBootApplication
 public class CoreServiceApplication {
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private CandidateRepository candidateRepository;
@@ -45,7 +49,7 @@ public class CoreServiceApplication {
 	}
 
 	@StreamListener(target = Sink.INPUT)
-	public void processCheapMeals(String user) {
-		System.out.println("Welcome to Pericles " + user);
+	public void processUsers(String user) {
+		log.info("User received : " + user);
 	}
 }
